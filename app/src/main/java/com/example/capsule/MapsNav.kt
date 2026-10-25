@@ -135,7 +135,7 @@ object MapsNav {
         return total > 0 && clear * 100 / total >= 15
     }
 
-    private fun setArrow(b: Bitmap) {
+    private fun storeArrow(b: Bitmap) {
         val old = arrow
         if (old != null && old.width == b.width && old.height == b.height && old.sameAs(b)) return
         arrow = b
@@ -152,7 +152,7 @@ object MapsNav {
     // From Maps' navigation notification. The screen text, when it is fresh, is more up to date, so it wins.
     fun updateFromNotification(texts: List<String>, arrowBmp: Bitmap?) {
         notifAlive = true
-        if (arrowBmp != null) setArrow(arrowBmp)
+        if (arrowBmp != null) storeArrow(arrowBmp)
         val items = texts.flatMap { listOf(it) + it.split(sepRe) }.map { norm(it) }.filter { it.isNotEmpty() }.distinct()
         if (SystemClock.uptimeMillis() - accessAt < 3000) {
             noteDirection(items)
